@@ -1,0 +1,39 @@
+
+services:
+
+  wcferry-rpc:
+    image: bitwild/wcferry-rpc:${VERSION}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VERSION=${VERSION}
+        - PYTHON_VERSION=${PYTHON_VERSION}
+        - WECHAT_VERSION=${WECHAT_VERSION}
+    restart: unless-stopped
+    container_name: wcferry-rpc
+    environment:
+      TZ: Asia/Shanghai
+      USERNAME: ${USER_NAME}
+      PASSWORD: ${PASSWORD}
+    env_file:
+         - .env
+    ulimits:
+      nproc: 8192
+      nofile:
+        soft: 8192
+        hard: 8192
+    ports:
+      - 13389:3389
+      - 10086:10086
+      - 10087:10087
+    volumes:
+      - /etc/timezone:/etc/timezone
+      - /etc/hosts:/etc/hosts
+      - ${PWD}/WeChatFiles:/${USER_NAME}/Documents/WeChat Files # 其他用户名，加前缀/home
+    healthcheck:
+      test: ["CMD", "nc", "-vz", "127.0.0.1", "3389" ]
+      start_period: 60s
+      interval: 30s
+      timeout: 10s
+      retries: 3
