@@ -30,7 +30,7 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone
       - /etc/hosts:/etc/hosts
-      - ${PWD}/WeChatFiles:/${USER_NAME}/Documents/WeChat Files # 其他用户名，加前缀/home
+      - ${PWD}/WeChatFiles:/root/.wine/drive_c/users/root/Documents/WeChat Files
     healthcheck:
       test: ["CMD", "nc", "-vz", "127.0.0.1", "3389" ]
       start_period: 60s
