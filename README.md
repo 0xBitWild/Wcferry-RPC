@@ -45,7 +45,7 @@ docker compose up -d
 
 ## 自定义构建
 
-如需自定义版本或配置，可以按以下步骤进行：
+### 1. 基础配置
 
 ```bash
 # 克隆项目
@@ -55,7 +55,7 @@ git clone https://github.com/0xbitwild/Wcferry-RPC.git
 cd Wcferry-RPC
 
 # 配置版本信息
-sed -i 's/VERSION=.*/VERSION=v39.4.0/g' .env                  # WeChatFerry 版本
+sed -i 's/VERSION=.*/VERSION=v39.4.1/g' .env                  # WeChatFerry 版本
 sed -i 's/PYTHON_VERSION=.*/PYTHON_VERSION=3.12.4/g' .env     # Python 版本
 sed -i 's/WECHAT_VERSION=.*/WECHAT_VERSION=3.9.12.17/g' .env  # 微信版本
 
@@ -67,13 +67,29 @@ sed -i 's/PASSWORD=.*/PASSWORD=Passw0rd/g' .env               # RDP 密码
 docker compose build
 ```
 
-### 手动安装步骤
+### 2. 手动安装步骤
 
-由于 Wine 环境的特殊性，Python 和微信需要手动安装：
+由于 Wine 环境的特殊性，需要手动完成以下安装步骤：
 
 1. 通过 RDP 登录到容器
 2. 双击 `Python3Setup.desktop` 安装 Python
 3. 双击 `WeChatSetup.desktop` 安装微信
+4. 双击 `Cleanup.desktop` 清理安装包
+
+### 3. 镜像提交（可选）
+
+如果需要保存当前容器状态，可以执行以下命令：
+
+```bash
+# 关闭容器
+docker stop wcferry-rpc
+
+# 提交容器更改为新镜像
+docker commit wcferry-rpc bitwild/wcferry-rpc:v39.4.1
+
+# 推送镜像到 Docker Hub
+docker push bitwild/wcferry-rpc:v39.4.1
+```
 
 ## 技术栈
 
