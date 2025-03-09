@@ -91,6 +91,22 @@ docker commit wcferry-rpc bitwild/wcferry-rpc:v39.4.1
 docker push bitwild/wcferry-rpc:v39.4.1
 ```
 
+### 4. 版本管理
+
+为项目打标签并发布：
+
+```bash
+# 确保所有更改已提交
+git add .
+git commit -m "release: v39.4.1"
+
+# 创建标签
+git tag -a v39.4.1 -m "Release version 39.4.1"
+
+# 推送标签到远程仓库
+git push origin v39.4.1
+```
+
 ## 技术栈
 
 - WeChatFerry：微信消息 Hook 实现
